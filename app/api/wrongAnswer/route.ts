@@ -51,6 +51,7 @@ export async function GET(req: Request) {
   });
 
   const responseText = response.choices[0].message.content;
+  console.log(responseText)
 
   if (!responseText) {
     return new Response(

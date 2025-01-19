@@ -8,16 +8,28 @@ export interface LanguageCardProps {
     title: string;
     description: string;
     to: string;
+    onButtonHover: (hovering: boolean) => void;
+    code: string;
 }
 
-export const LanguageCard: React.FC<LanguageCardProps> = ({ title, description, to }) => {
+export const LanguageCard: React.FC<LanguageCardProps> = ({ title, description, to, onButtonHover, code }) => {
+    console.log(code);
     return (
         <div className={"flex flex-col items-start mb-4 py-10"}>
-            <div className="text-4xl tracking-tighter text-primary-text">{title}</div>
+            <div className="text-4xl tracking-tighter text-primary-text">{title} {code !== "swahili" && <span className="text-tertiary-text">[coming soon]</span>}</div>
             <div className="self-stretch mt-2 text-secondary-text mb-2">
                 {description}
             </div>
-            <Button to={to} text="Enter" Icon={ArrowRightIcon} shadow={false} customClassName="hover:!shadow-[0px_0px_20px_rgba(246,140,90,1)]" />
+            <Button 
+                to={to} 
+                text="Enter" 
+                Icon={ArrowRightIcon} 
+                shadow={false} 
+                customClassName="hover:!shadow-[0px_0px_20px_rgba(246,140,90,1)]"
+                onMouseEnter={() => onButtonHover(true)}
+                onMouseLeave={() => onButtonHover(false)}
+                disabled={code !== "swahili"}
+            />
         </div>
     );
 };
@@ -26,6 +38,7 @@ export const LanguageCard: React.FC<LanguageCardProps> = ({ title, description, 
 export default () => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isInside, setIsInside] = useState(false);
+    const [isHoveringButton, setIsHoveringButton] = useState(false);
 
     return (
         <div
@@ -47,11 +60,15 @@ export default () => {
                         title={language.title}
                         description={language.description}
                         to={`/learn/${language.code}`}
+                        onButtonHover={setIsHoveringButton}
+                        code={language.code}
                     />
                 ))}
             </div>
             <div
-                className={`absolute h-20 bg-[#f68c5a] rounded-full w-screen ${!isInside ? "transition-all duration-300" : "!w-20"}`}
+                className={`absolute h-20 bg-[#f68c5a] rounded-full w-screen z-10 pointer-events-none ${
+                    !isInside ? "transition-all duration-300" : "!w-20"
+                } ${isHoveringButton ? "opacity-0" : "opacity-100"}`}
                 style={{
                     top: isInside ? mousePos.y : "auto",
                     bottom: isInside ? "auto" : 0,

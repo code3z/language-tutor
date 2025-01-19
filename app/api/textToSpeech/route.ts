@@ -5,10 +5,9 @@ const langMap = {
   swahili: "ngina",
 };
 
-const audioCache = new Map<string, ArrayBuffer>();
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  console.log(searchParams)
   const language = searchParams.get("language") as keyof typeof langMap;
   const text = searchParams.get("text");
   if (!language || !text) {
@@ -32,7 +31,10 @@ export async function GET(request: Request) {
   try {
     const cachedAudio = await fs.readFile(cacheFilePath);
     return new Response(cachedAudio, {
-      headers: { "Content-Type": "audio/mp3" },
+      headers: { 
+        "Content-Type": "audio/mp3",
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
     });
   } catch {
     const narakeetResponse = await fetch(
@@ -53,7 +55,10 @@ export async function GET(request: Request) {
     const audio = await narakeetResponse.arrayBuffer();
     await fs.writeFile(cacheFilePath, Buffer.from(audio));
     return new Response(audio, {
-      headers: { "Content-Type": "audio/mp3" },
+      headers: { 
+        "Content-Type": "audio/mp3",
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
     });
   }
 }
