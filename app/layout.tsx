@@ -23,7 +23,12 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="languagetutor.app" />
+        <meta property="twitter:url" content="https://languagetutor.app" />
+        <meta name="twitter:title" content="Leo - the language tutor" />
+        <meta name="twitter:description" content="A new way to learn a language" />
+        <meta name="twitter:image" content="https://languagetutor.app/screenshot.png" />
       </head>
       <body
         className={`${platypi.variable} bg-background`}

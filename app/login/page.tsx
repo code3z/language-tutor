@@ -49,7 +49,7 @@ export default function LoginPage() {
   }, [router]);
   
   async function sendMagicLink() {
-    const { error } = await supabase.auth.signInWithOtp({ email, options: {emailRedirectTo: window.location.href } });
+    const { error } = await supabase.auth.signInWithOtp({ email });
     if (error) alert("Error sending email");
     else setSent(true);
   }
