@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChatItem, LessonItem } from '../lesson/[language]/[id]/page';
 import { formatText } from '../utils/textFormatting';
-import { useTypingEffect } from '../utils/useTypingEffect';
-import { useTextToSpeech } from './useTextToSpeech';
 
 export function useChatState(lesson: LessonItem[], startItemIndex: number, initialChat: ChatItem[]) {
     const [currentLessonItem, setCurrentLessonItem] = useState(startItemIndex);
@@ -17,18 +15,7 @@ export function useChatState(lesson: LessonItem[], startItemIndex: number, initi
     const [loading, setLoading] = useState(false);
     const chatFormRef = useRef<HTMLFormElement>(null);
 
-
-    // Get the current text to type
-    const currentText = chat[chat.length - 1] && 
-        ('information' in chat[chat.length - 1] || 'question' in chat[chat.length - 1]) ? 
-        ('information' in chat[chat.length - 1] ? 
-            (chat[chat.length - 1] as { information: string }).information : 
-            (chat[chat.length - 1] as { question: string }).question) : 
-        undefined;
-
-    const { typedString, isTyping } = useTypingEffect(currentText);
-
-    // Format text for non-typing items
+    // Format text for items
     useEffect(() => {
         chat.forEach(async (item) => {
             if ('question' in item && typeof item.question === 'string' && !formattedText[item.id]) {
@@ -135,8 +122,6 @@ export function useChatState(lesson: LessonItem[], startItemIndex: number, initi
         chatFormRef,
         nextIsChallenge,
         loading,
-        typedString,
-        isTyping,
         handleSubmit,
         dontKnow
     };

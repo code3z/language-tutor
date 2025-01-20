@@ -1,21 +1,20 @@
 import { useEffect, useRef } from "react";
 
-export function useTextToSpeech(
-  language: string,
-) {
+export function useTextToSpeech(language: string) {
   if (typeof Audio === "undefined") return;
 
   useEffect(() => {
+    let audio: HTMLAudioElement;
     const elements = document.querySelectorAll(
       "span.foreign:not(.initialized)"
     );
 
     const playAudio = (text: string) => {
-      const audio = new Audio();
+      audio = audio || new Audio();
       audio.src = `/api/textToSpeech?language=${language}&text=${encodeURIComponent(
         text.toLowerCase()
       )}`;
-      return audio.play();
+      audio.play();
     };
 
     const mouseEnterListener = (e: Event) => {

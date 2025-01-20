@@ -68,29 +68,41 @@ interface LessonsProps {
 
 export default function Lessons({ language, lessons, status, defaultActiveLesson }: LessonsProps) {
   const [activeLesson, setActiveLesson] = useState<number>(defaultActiveLesson);
+  
+  const allLessonsCompleted = lessons.every(lesson => 
+    status[lesson.number.toString()] === "done"
+  );
 
   return (
-    <div role="list" aria-label="Available lessons">
-      {lessons.map((lesson, index) => (
-        <div
-          key={index}
-          className={`block my-3 text-xl font-serif text-secondary-text transition-all duration-300 ${
-            activeLesson === index 
-              ? 'scale-100 opacity-100' 
-              : `scale-95 opacity-60 ${index <= defaultActiveLesson ? "hover:opacity-80" : ""}`
-          }`}
-          role="listitem"
-        >
-          <LessonCard
-            lesson={lesson}
-            language={language}
-            status={status[lesson.number.toString()]}
-            isActive={activeLesson === index}
-            onClick={() => setActiveLesson(index)}
-            isLocked={index > defaultActiveLesson}
-          />
+    <div>
+      {allLessonsCompleted && (
+        <div className="mb-8 p-6 rounded-2xl border border-black/20 font-serif">
+          <h2 className="text-2xl font-semibold text-primary-text mb-2">Congratulations! 🎉</h2>
+          <p className="text-secondary-text">You've completed all of our Swahili lessons! Feel free to review any lesson.<br/> If you'd like to learn more, give feedback, or sponsor more lessons, please email ian@ianc.me</p>
         </div>
-      ))}
+      )}
+      <div role="list" aria-label="Available lessons">
+        {lessons.map((lesson, index) => (
+          <div
+            key={index}
+            className={`block my-3 text-xl font-serif text-secondary-text transition-all duration-300 ${
+              activeLesson === index 
+                ? 'scale-100 opacity-100' 
+                : `scale-95 opacity-60 ${index <= defaultActiveLesson ? "hover:opacity-80" : ""}`
+            }`}
+            role="listitem"
+          >
+            <LessonCard
+              lesson={lesson}
+              language={language}
+              status={status[lesson.number.toString()]}
+              isActive={activeLesson === index}
+              onClick={() => setActiveLesson(index)}
+              isLocked={index > defaultActiveLesson}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
