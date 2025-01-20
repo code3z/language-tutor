@@ -29,7 +29,7 @@ export default function Button({
   onMouseEnter,
   onMouseLeave
 }: ButtonProps) {
-  const className = "inline-block group font-sans font-medium transition-all duration-250 px-7 py-3.5 max-w-full tracking-tight text-white whitespace-nowrap bg-primary rounded-md max-md:px-5 disabled:bg-gray-400 disabled:!shadow-none disabled:transition-none hover:bg-[#f7a884]" + " " + (small ? "hover:!shadow-none !shadow-[0px_0px_10px_rgba(246,140,90,1)] !py-2.5 !px-7" : "") + " " + (shadow !== false ? "hover:shadow-[0px_0px_20px_rgba(246,140,90,1)] " : "!shadow-none ") + (disabled ? "pointer-events-none bg-gray-400 !shadow-none !transition-none " : "") + customClassName;
+  const className = "inline-block group font-sans font-medium transition-all duration-250 px-7 py-3.5 max-w-full tracking-tight text-white whitespace-nowrap bg-primary rounded-md max-md:px-5 disabled:!bg-gray-400 disabled:!shadow-none disabled:transition-none hover:bg-[#f7a884]" + " " + (small ? "hover:!shadow-none !shadow-[0px_0px_10px_rgba(246,140,90,1)] !py-2.5 !px-7" : "") + " " + (shadow !== false ? "hover:shadow-[0px_0px_20px_rgba(246,140,90,1)] " : "!shadow-none ") + (disabled ? "pointer-events-none bg-gray-400 !shadow-none !transition-none " : "") + customClassName;
 
   return (
     to ? 
