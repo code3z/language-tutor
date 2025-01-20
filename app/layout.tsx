@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Platypi } from 'next/font/google'
 
 export const metadata: Metadata = {
   title: "Leo - the language tutor",
   description: "A new way to learn a language",
 };
+
+const platypi = Platypi({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-platypi',
+})
 
 export default function RootLayout({
   children,
@@ -19,7 +26,7 @@ export default function RootLayout({
 
       </head>
       <body
-        className={`font-sans bg-background`}
+        className={`${platypi.variable} bg-background`}
       >
         {children}
       </body>
