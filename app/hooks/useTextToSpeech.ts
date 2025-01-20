@@ -1,8 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export function useTextToSpeech(language: string) {
-  if (typeof Audio === "undefined") return;
-
   useEffect(() => {
     let audio: HTMLAudioElement;
     const elements = document.querySelectorAll(

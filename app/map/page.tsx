@@ -12,7 +12,7 @@ export interface LanguageCardProps {
     code: string;
 }
 
-export const LanguageCard: React.FC<LanguageCardProps> = ({ title, description, to, onButtonHover, code }) => {
+const LanguageCard: React.FC<LanguageCardProps> = ({ title, description, to, onButtonHover, code }) => {
     console.log(code);
     return (
         <div className={"flex flex-col items-start mb-4 py-10"}>
@@ -35,7 +35,7 @@ export const LanguageCard: React.FC<LanguageCardProps> = ({ title, description, 
 };
 
 
-export default () => {
+export default function Map() {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isInside, setIsInside] = useState(false);
     const [isHoveringButton, setIsHoveringButton] = useState(false);

@@ -22,7 +22,7 @@ export default function User() {
 
   return (
     <div className="text-secondary-text">
-      {user?.email} //{" "}
+      {user?.email} <span className="mx-2">{'//'}</span>
       <button
         className="underline"
         onClick={async () => {

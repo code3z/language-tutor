@@ -21,7 +21,6 @@ export default function Chat({
   id,
   lesson,
   startItemIndex,
-  startChatIndex,
   initialChat,
 }: {
   language: string;
@@ -33,20 +32,6 @@ export default function Chat({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  if (startItemIndex > lesson.length - 1) {
-    return (
-      <div>
-        Error: Start item index is greater than lesson length{" "}
-        <Link
-          href={`/lesson/${language}/${id}`}
-          className="text-primary underline"
-        >
-          Restart this lesson
-        </Link>
-      </div>
-    );
-  }
 
   const {
     currentLessonItem,
@@ -77,7 +62,7 @@ export default function Chat({
 
       const current = new URLSearchParams(Array.from(searchParams.entries()));
       const newStartItem = Math.floor(currentLessonItem).toString();
-
+     
       if (current.get("startItem") !== newStartItem) {
         current.set("startItem", newStartItem);
         router.replace(`/lesson/${language}/${id}?${current}`, {
@@ -96,6 +81,20 @@ export default function Chat({
     startItemIndex,
     chatFormRef,
   ]);
+
+  if (startItemIndex > lesson.length - 1) {
+    return (
+      <div>
+        Error: Start item index is greater than lesson length{" "}
+        <Link
+          href={`/lesson/${language}/${id}`}
+          className="text-primary underline"
+        >
+          Restart this lesson
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-background mx-auto px-16 h-screen max-w-3xl py-16 flex flex-col">
@@ -177,7 +176,7 @@ export default function Chat({
                 onClick={dontKnow}
                 className="text-secondary-text text-left mt-2 font-medium"
               >
-                <QuestionMarkCircleIcon className="icon stroke-2" /> I don't
+                <QuestionMarkCircleIcon className="icon stroke-2" /> I don&apos;t
                 know
               </button>
             )}

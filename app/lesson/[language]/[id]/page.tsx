@@ -9,8 +9,8 @@ export type LessonItem =
 export type ChatItem = LessonItem | { user: string }
 
 export default async function Page({ params, searchParams }: { 
-    params: { language: string, id: string },
-    searchParams: { [key: string]: string | string[] | undefined }
+    params: Promise<{ language: string, id: string }>,
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
     const {language, id} = await params
     const {startItem} = await searchParams
@@ -41,7 +41,7 @@ export default async function Page({ params, searchParams }: {
             .find((item: LessonItem) => item.challenge)?.id || 0;
 
     const chat: ChatItem[] = []
-    for (let item of lesson.slice(startChatIndex, startItemIndex)) {
+    for (const item of lesson.slice(startChatIndex, startItemIndex)) {
         if ('question' in item && item.question) {
             chat.push(item)
             chat.push({ user: item.answer })

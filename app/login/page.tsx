@@ -46,10 +46,10 @@ export default function LoginPage() {
       }
     }
     getUser();
-  }, []);
+  }, [router]);
   
   async function sendMagicLink() {
-    let { data, error } = await supabase.auth.signInWithOtp({ email, options: {emailRedirectTo: window.location.href } });
+    const { error } = await supabase.auth.signInWithOtp({ email, options: {emailRedirectTo: window.location.href } });
     if (error) alert("Error sending email");
     else setSent(true);
   }
@@ -59,7 +59,7 @@ export default function LoginPage() {
       <div>
         {sent ? (
           <p className="text-primary-text mt-4">
-            We've sent you a login link! Please check your inbox.
+            We&apos;ve sent you a login link! Please check your inbox.
           </p>
         ) : (
           <>

@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import type { ChatItem } from "@/app/lesson/[language]/[id]/page";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -20,14 +21,17 @@ export async function GET(req: Request) {
     const chat = JSON.parse(chatString);
     const question = chat[chat.length - 2].question;
 
-    const chats = chat.map((item: any) => {
+    const chats = chat.map((item: ChatItem) => {
+        const text = 'user' in item ? item.user : 
+                    'question' in item ? item.question :
+                    'information' in item ? item.information : '';
         return {
             role: "user" in item ? "user" : "assistant",
             content: [
-            {
-                type: "text",
-                text: item.user || item.question || item.information
-            }
+                {
+                    type: "text",
+                    text
+                }
             ]
         }
     })

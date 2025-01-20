@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import { ArrowRightIcon, CheckBadgeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
@@ -78,7 +78,7 @@ export default function Lessons({ language, lessons, status, defaultActiveLesson
       {allLessonsCompleted && (
         <div className="mb-8 p-6 rounded-2xl border border-black/20 font-serif">
           <h2 className="text-2xl font-semibold text-primary-text mb-2">Congratulations! 🎉</h2>
-          <p className="text-secondary-text">You've completed all of our Swahili lessons! Feel free to review any lesson.<br/> If you'd like to learn more, give feedback, or sponsor more lessons, please email ian@ianc.me</p>
+          <p className="text-secondary-text">You&apos;ve completed all of our Swahili lessons! Feel free to review any lesson.<br/> If you&apos;d like to learn more, give feedback, or sponsor more lessons, please email ian@ianc.me</p>
         </div>
       )}
       <div role="list" aria-label="Available lessons">

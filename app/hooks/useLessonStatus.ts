@@ -4,18 +4,6 @@ import { supabase } from '../supabaseClient';
 export function useLessonStatus(language: string, id: number, currentLessonItem: number, lessonLength: number) {
     const [done, setDone] = useState(false);
 
-    useEffect(() => {
-        const currentLessonSection = Math.floor(currentLessonItem);
-        
-        // Update status when section changes or lesson is completed
-        if (currentLessonSection === lessonLength - 1 && !done) {
-            setDone(true);
-            updateLessonStatus(currentLessonSection, true);
-        } else {
-            updateLessonStatus(currentLessonSection);
-        }
-    }, [Math.floor(currentLessonItem), done, lessonLength]);
-
     const updateLessonStatus = async (currentSection: number, isDone = false) => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
@@ -26,8 +14,9 @@ export function useLessonStatus(language: string, id: number, currentLessonItem:
             .eq("user_id", user.id)
             .eq("language", language)
             .single();
+        if (fetchError) console.error("Error fetching lesson status:", fetchError);
 
-        let currentStatus = lessonsStatusData?.status ? JSON.parse(lessonsStatusData.status) : {};
+        const currentStatus = lessonsStatusData?.status ? JSON.parse(lessonsStatusData.status) : {};
         const newStatus = (isDone || currentSection === lessonLength - 1) ? "done" : currentSection;
         
         // Only update if the status has changed
@@ -63,6 +52,18 @@ export function useLessonStatus(language: string, id: number, currentLessonItem:
             }
         }
     };
+
+    useEffect(() => {
+        const currentLessonSection = Math.floor(currentLessonItem);
+        
+        // Update status when section changes or lesson is completed
+        if (currentLessonSection === lessonLength - 1 && !done) {
+            setDone(true);
+            updateLessonStatus(currentLessonSection, true);
+        } else {
+            updateLessonStatus(currentLessonSection);
+        }
+    }, [Math.floor(currentLessonItem), done, lessonLength, currentLessonItem, updateLessonStatus]);
 
     return { done };
 } 

@@ -1,7 +1,6 @@
 'use client';
 
 import { ChatItem } from '../lesson/[language]/[id]/page';
-import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import { useRef } from 'react';
 import { useTypingEffect } from '../utils/useTypingEffect';
 
@@ -12,7 +11,7 @@ interface ChatMessageProps {
     language: string;
 }
 
-export default function ChatMessage({ item, currentLessonItem, formattedText, language }: ChatMessageProps) {
+export default function ChatMessage({ item, currentLessonItem, formattedText }: ChatMessageProps) {
     const content = 'question' in item ? item.question :
                    'information' in item ? item.information :
                    'user' in item ? item.user : '';
@@ -25,11 +24,8 @@ export default function ChatMessage({ item, currentLessonItem, formattedText, la
 
     // Set up typing effect for non-user messages when they are current
     const shouldType = !('user' in item) && currentLessonItem === ('id' in item ? item.id : -1);
-    const { typedString, isTyping } = useTypingEffect(shouldType ? content : undefined);
+    const { typedString } = useTypingEffect(shouldType ? content : undefined);
     
-    // Set up text-to-speech functionality
-    useTextToSpeech(language);
-
     if ('question' in item || 'information' in item) {
         return (
             <div className="text-secondary-text font-serif text-lg mb-3 mt-6" ref={self}>

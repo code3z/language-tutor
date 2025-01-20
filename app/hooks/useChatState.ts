@@ -80,7 +80,7 @@ export function useChatState(lesson: LessonItem[], startItemIndex: number, initi
     }
 
     const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
-        e && e.preventDefault();
+        if (e) e.preventDefault();
         const currentLessonSection = Math.floor(currentLessonItem)
 
         if (lesson[currentLessonSection].answer && input.toLowerCase() !== lesson[currentLessonSection].answer.replaceAll("*", "").toLowerCase()) {

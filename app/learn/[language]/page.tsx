@@ -2,7 +2,6 @@ import Lessons from "@/app/components/Lessons";
 import User from "@/app/components/User";
 import { languageData } from "@/app/languageData";
 import { createClient } from "@/supabaseServer";
-import Link from "next/link";
 
 export default async function Page({
   params,
@@ -26,8 +25,7 @@ export default async function Page({
   }
 
   const {
-    data: { session },
-    error: userError,
+    data: { session }
   } = await supabase.auth.getSession();
   if (!session) return <div>Error loading user</div>;
 
@@ -36,6 +34,7 @@ export default async function Page({
     .select("status")
     .eq("user_id", session.user.id)
     .eq("language", language);
+  if (lessonsStatusError) console.error("Error fetching lesson status:", lessonsStatusError);
 
   if (lessonsStatusData && lessonsStatusData.length === 0) {
     const { error: lessonsStatusError } = await supabase
@@ -59,8 +58,8 @@ export default async function Page({
     const lastCompletedLesson = Math.max(
       0,
       ...Object.entries(lessonsStatus)
-        .filter(([_, value]) => value === "done")
-        .map(([lessonNumber, _]) => parseInt(lessonNumber))
+        .filter(([, value]) => value === "done")
+        .map(([lessonNumber]) => parseInt(lessonNumber))
     );
     console.log(lastCompletedLesson, "lastCompletedLesson", Object.entries(lessonsStatus))
     // If no completed lessons found, set to 0

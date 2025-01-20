@@ -1,3 +1,4 @@
+import { LessonItem } from "@/app/lesson/[language]/[id]/page";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -21,12 +22,12 @@ export async function GET(req: Request) {
   const userAnswer = chat[chat.length - 1].user;
   const question = chat[chat.length - 2].question;
 
-  const chats = chat.map((item: any) => ({
+  const chats = chat.map((item: LessonItem) => ({
     role: "user" in item ? "user" : "assistant",
     content: [
       {
         type: "text",
-        text: item.user || item.question || item.information
+        text: "user" in item ? item.user : (item.question || item.information)
       }
     ]
   }));

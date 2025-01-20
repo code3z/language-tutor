@@ -118,7 +118,7 @@ export async function GET() {
   const sections = gptResult.split("---").filter(item => item.trim() !== "") // remove any blank items
   const data = sections.map((section, index) => {
     if (section.includes("Question")) {
-      let sectionParts = section.split("\n")
+      const sectionParts = section.split("\n")
       return {
         id: index,
         question: sectionParts.find(part => part.includes("Question"))?.replace("Question:", "").trim(),
