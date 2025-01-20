@@ -29,6 +29,7 @@ export default function RootLayout({
         <meta name="twitter:title" content="Leo - the language tutor" />
         <meta name="twitter:description" content="A new way to learn a language" />
         <meta name="twitter:image" content="https://languagetutor.app/screenshot.png" />
+        <meta property="og:image" content="https://languagetutor.app/screenshot.png" />
       </head>
       <body
         className={`${platypi.variable} bg-background`}
