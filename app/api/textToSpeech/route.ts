@@ -53,7 +53,13 @@ export async function GET(request: Request) {
       return new Response("Error calling Narakeet API", { status: 500 });
     }
     const audio = await narakeetResponse.arrayBuffer();
-    await fs.writeFile(cacheFilePath, Buffer.from(audio));
+    try {
+      await fs.writeFile(cacheFilePath, Buffer.from(audio));
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'EROFS') {
+        return new Response("Error writing to cache", { status: 500 });
+      }
+    }
     return new Response(audio, {
       headers: { 
         "Content-Type": "audio/mp3",

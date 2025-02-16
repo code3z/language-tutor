@@ -3,6 +3,7 @@
 import { ChatItem } from '../lesson/[language]/[id]/page';
 import { useRef } from 'react';
 import { useTypingEffect } from '../utils/useTypingEffect';
+import { useTextToSpeech } from '../hooks/useTextToSpeech';
 
 interface ChatMessageProps {
     item: ChatItem;
@@ -11,7 +12,7 @@ interface ChatMessageProps {
     language: string;
 }
 
-export default function ChatMessage({ item, currentLessonItem, formattedText }: ChatMessageProps) {
+export default function ChatMessage({ item, currentLessonItem, formattedText, language }: ChatMessageProps) {
     const content = 'question' in item ? item.question :
                    'information' in item ? item.information :
                    'user' in item ? item.user : '';
@@ -25,6 +26,7 @@ export default function ChatMessage({ item, currentLessonItem, formattedText }: 
     // Set up typing effect for non-user messages when they are current
     const shouldType = !('user' in item) && currentLessonItem === ('id' in item ? item.id : -1);
     const { typedString } = useTypingEffect(shouldType ? content : undefined);
+    useTextToSpeech(language); // runs on every render
     
     if ('question' in item || 'information' in item) {
         return (

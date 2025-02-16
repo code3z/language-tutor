@@ -15,6 +15,7 @@ import { useChatState } from "../hooks/useChatState";
 import { useLessonStatus } from "../hooks/useLessonStatus";
 import { useEffect } from "react";
 import { useTextToSpeech } from "../hooks/useTextToSpeech";
+import { time } from "console";
 
 export default function Chat({
   language,
@@ -45,8 +46,6 @@ export default function Chat({
     handleSubmit,
     dontKnow,
   } = useChatState(lesson, startItemIndex, initialChat);
-
-  useTextToSpeech(language); // runs on every render
 
   const { done } = useLessonStatus(
     language,

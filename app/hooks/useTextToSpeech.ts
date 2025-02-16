@@ -8,6 +8,7 @@ export function useTextToSpeech(language: string) {
     );
 
     const playAudio = (text: string) => {
+      console.log(`Playing audio for: ${text}`);
       audio = audio || new Audio();
       audio.src = `/api/textToSpeech?language=${language}&text=${encodeURIComponent(
         text.toLowerCase()
