@@ -14,8 +14,6 @@ import ChatMessage from "./ChatMessage";
 import { useChatState } from "../hooks/useChatState";
 import { useLessonStatus } from "../hooks/useLessonStatus";
 import { useEffect } from "react";
-import { useTextToSpeech } from "../hooks/useTextToSpeech";
-import { time } from "console";
 
 export default function Chat({
   language,
